@@ -10,13 +10,12 @@ const setupProductRoutes = app => {
     try {
       const data = await loadData();
       const { type, minPrice, maxPrice, search, list, category } = req.query;
-      console.log('req.query: ', req.query);
       const allProducts = [].concat(...Object.values(data));
 
-      if ((minPrice || maxPrice || category) && (!type && !search)) {
+      if ((minPrice || maxPrice || category) && !(search || type)) {
         return res.status(400).json({
           error:
-            "Parameters 'minPrice', 'maxPrice', 'category' require 'type' to be specified",
+            "Parameters 'minPrice', 'maxPrice', 'category' require 'type' or 'search' to be specified",
         });
       }
 
@@ -27,8 +26,6 @@ const setupProductRoutes = app => {
       }
 
       if (search) {
-        console.log('Search query:', search);
-
         const min = parseInt(minPrice) || 0;
         const max = parseInt(maxPrice) || Number.MAX_SAFE_INTEGER;
         const filteredProducts = filterBySearch(
@@ -38,7 +35,6 @@ const setupProductRoutes = app => {
           max,
           category,
         );
-        // console.log('filteredProducts: ', filteredProducts);
         return res.json(filteredProducts);
       }
 

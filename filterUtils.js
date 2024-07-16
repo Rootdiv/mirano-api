@@ -17,7 +17,7 @@ const normalizeAndStem = text => {
 const filterBySearch = (products, searchQuery, min, max, category) => {
   const searchWords = normalizeAndStem(searchQuery);
 
-  const filteredProducts = products.filter(product => {
+  const foundProducts = products.filter(product => {
     const productWords = normalizeAndStem(product.name);
 
     return searchWords.every(searchWord =>
@@ -25,7 +25,7 @@ const filterBySearch = (products, searchQuery, min, max, category) => {
     );
   });
 
-  return filteredProducts.filter(
+  return foundProducts.filter(
     product =>
       product.price >= min &&
       product.price <= max &&
@@ -42,7 +42,7 @@ const filterByCriteria = (products, min, max, category) => {
     product =>
       product.price >= min &&
       product.price <= max &&
-      (!category || product.categories.includes(category)),
+      (!category || product.categories?.includes(category)),
   );
 };
 

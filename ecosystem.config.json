@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "mirano",
+      "script": "index.js",
+      "watch": [
+        "cartController.js",
+        "cartUtils.js",
+        "dataService.js",
+        "filterUtils.js",
+        "index.js",
+        "orderController.js",
+        "productController.js"
+      ],
+      "env": {
+        "PROD": true,
+        "PORT": 2919
+      }
+    }
+  ]
+}

@@ -41,6 +41,9 @@ setupProductRoutes(app);
 setupOrderRoutes(app);
 setupCartRoutes(app);
 
-app.listen(PORT, () => {
-  console.log(`Server is running http://localhost:${PORT}`);
+// Запускаем сервер, чтобы порт был доступен только из локальной сети
+app.listen(PORT, 'localhost', () => {
+  if (process.env.PROD !== 'true') {
+    console.log(`Server is running http://localhost:${PORT}`);
+  }
 });

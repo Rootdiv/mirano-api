@@ -13,7 +13,6 @@
   - `category`: строка (необязательный) - фильтр товаров по категории.
   - `minPrice`: число (необязательный) - фильтр товаров по минимальной цене.
   - `maxPrice`: число (необязательный) - фильтр товаров по максимальной цене.
-    специфичных товаров.
 - **Пример запроса**:
   - `/api/products?type=bouquets`
   - `/api/products?type=toys`
@@ -53,17 +52,7 @@
     "address": "ул. Советская, дом 10, кв 15",
     "paymentOnline": true,
     "deliveryDate": "2023-10-05",
-    "deliveryTime": "с 9:00 до 12:00",
-    "products": [
-      {
-        "id": 1,
-        "quantity": 2
-      },
-      {
-        "id": 2,
-        "quantity": 3
-      }
-    ]
+    "deliveryTime": "с 9:00 до 12:00"
   }
   ```
 
@@ -77,8 +66,7 @@ curl -X POST http://localhost:3000/api/orders -H 'Content-Type: application/json
   "paymentOnline": true,
   "deliveryDate": "2023-10-05",
   "deliveryTime": "с 9:00 до 12:00",
-  "products": [{"id": 1, "quantity": 2}, {"id": 2, "quantity": 3}],
-  "total":
+}'
 ```
 
 ## Примечания

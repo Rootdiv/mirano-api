@@ -13,15 +13,18 @@ export const setupCartRoutes = app => {
     if (accessKey && carts[accessKey]) {
       res.json({ accessKey, message: 'Existing cart key reused.' });
     } else {
+      // Устанавливаем время жизни куки в 3 дня
+      const cookieDate = new Date();
+      cookieDate.setDate(cookieDate.getDate() + 3);
       const newAccessKey = randomUUID();
       carts[newAccessKey] = { items: [] };
       await writeCartData(carts);
       res.cookie('accessKey', newAccessKey, {
         httpOnly: true,
         path: '/',
-        secure: true,
-        sameSite: 'None',
+        sameSite: 'Lax',
         maxAge: 259200000,
+        expires: cookieDate,
       });
       res.json({ accessKey: newAccessKey });
     }

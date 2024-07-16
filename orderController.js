@@ -45,13 +45,18 @@ export const setupOrderRoutes = app => {
     if (!(await saveOrders(orders))) {
       return res.status(500).json({ error: 'Failed to save the order' });
     }
+    // Устанавливаем время жизни куки в 3 дня
+    const cookieDate = new Date();
+    cookieDate.setDate(cookieDate.getDate() + 3);
 
     const newAccessKey = randomUUID();
     res.cookie('accessKey', newAccessKey, {
       httpOnly: true,
       path: '/',
       secure: true,
-      sameSite: 'None',
+      sameSite: 'Lax',
+      maxAge: 259200000,
+      expires: cookieDate,
     });
     carts[newAccessKey] = { items: [] };
     await writeCartData(carts);

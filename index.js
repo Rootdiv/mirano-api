@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import 'express-async-errors';
 import { setupProductRoutes } from './productController.js';
 import { setupOrderRoutes } from './orderController.js';
@@ -12,7 +12,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://127.0.0.1:5500', 'http://localhost:5173', 'https://mirano.vercel.app'], // Замените на URL вашего фронтенда
+  // Массив адресов на которых может быть фронтэнд часть
+  origin: [
+    'http://localhost:5173',
+    'https://mirano.rootdiv.ru',
+    'https://mirano-react.rootdiv.ru',
+  ],
   credentials: true,
 };
 
@@ -22,9 +27,7 @@ app.use(cookieParser());
 app.use('/img', express.static('img'));
 
 // Read the Swagger JSON file
-const swaggerDocument = JSON.parse(
-  fs.readFileSync('./docs/swagger.json', 'utf8'),
-);
+const swaggerDocument = JSON.parse(readFileSync('./docs/swagger.json', 'utf8'));
 
 // Middleware для документации API
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
